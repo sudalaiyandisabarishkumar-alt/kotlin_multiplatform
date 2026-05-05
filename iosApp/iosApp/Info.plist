@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	  <!-- Camera -->
+        <key>NSCameraUsageDescription</key>
+        <string>We need camera access</string>
+
+        <!-- Location -->
+        <key>NSLocationWhenInUseUsageDescription</key>
+        <string>We need your location</string>
+
+        <key>NSLocationAlwaysUsageDescription</key>
+        <string>We need your location in background</string>
+
+        <!-- Notifications -->
+        <key>NSUserNotificationUsageDescription</key>
+        <string>We need to send notifications</string>
+</dict>
+</plist>
