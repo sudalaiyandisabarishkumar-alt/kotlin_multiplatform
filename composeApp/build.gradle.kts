@@ -92,7 +92,8 @@ android {
     }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = false  // ← just set this to false
+            isShrinkResources = false
         }
     }
     compileOptions {
@@ -104,6 +105,7 @@ android {
     }
     dependencies {
         debugImplementation(compose.uiTooling)
+        implementation(compose.uiTooling)
     }
 }
 

@@ -97,6 +97,7 @@ fun App(client: InsultCensorClient, prefs: DataStore<Preferences>){
                             )
                             Button(onClick = {
                                 scope.launch {
+                                    try{
                                     isLoading = true
                                     errorMessage = null
 
@@ -111,7 +112,14 @@ fun App(client: InsultCensorClient, prefs: DataStore<Preferences>){
                                         .onError {
                                             errorMessage = it
                                         }
-                                    isLoading = false
+                                }
+                                    catch (e: Exception) {
+                                        println("CRASH REASON: ${e.message}")
+                                        println("CRASH REASON: ${e.stackTraceToString()}")
+                                    }
+                                    finally {
+                                        isLoading = false
+                                    }
                                 }
                             }) {
                                 if(isLoading) {
