@@ -45,6 +45,7 @@ import util.onSuccess
 import kotlinx.coroutines.flow.map
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.plcoding.nativeiosincompose.NativeButton
 
 @Composable
 @Preview
@@ -94,45 +95,29 @@ fun App(client: InsultCensorClient, prefs: DataStore<Preferences>){
                                 placeholder = {
                                     Text("Uncensored text")
                                 }
-                            )
-                            Button(onClick = {
-                                scope.launch {
-                                    try{
-                                    isLoading = true
-                                    errorMessage = null
-
-                                    client.censorWords(uncensoredText)
-                                        .onSuccess {
-                                            prefs.edit { dataStore ->
-                                                val textKey = stringPreferencesKey("counter")
-                                                dataStore[textKey] = it
-                                            }
-                                            // Don't set censoredText manually
+                            )// In App.kt
+                            key(isLoading) {  // ← forces NativeButton to recreate when isLoading changes
+                                NativeButton(onClick = {
+                                    scope.launch {
+                                        try {
+                                            isLoading = true
+                                            errorMessage = null
+                                            client.censorWords(uncensoredText)
+                                                .onSuccess {
+                                                    prefs.edit { dataStore ->
+                                                        val textKey = stringPreferencesKey("counter")
+                                                        dataStore[textKey] = it
+                                                    }
+                                                }
+                                                .onError { errorMessage = it }
+                                        } catch (e: Exception) {
+                                            println("CRASH: ${e.message}")
+                                        } finally {
+                                            isLoading = false
                                         }
-                                        .onError {
-                                            errorMessage = it
-                                        }
-                                }
-                                    catch (e: Exception) {
-                                        println("CRASH REASON: ${e.message}")
-                                        println("CRASH REASON: ${e.stackTraceToString()}")
                                     }
-                                    finally {
-                                        isLoading = false
-                                    }
-                                }
-                            }) {
-                                if(isLoading) {
-                                    CircularProgressIndicator(
-                                        modifier = Modifier
-                                            .size(15.dp),
-                                        strokeWidth = 1.dp,
-                                        color = Color.White
-                                    )
-                                } else {
-                                    Text("Censor!")
-                                }
-                            }
+                                }, isLoading)
+                            }// ← isLoading passed here triggers createButtonView on change
                             savedText?.let {
                                 Text(it)  // always reads from DataStore
                             }
