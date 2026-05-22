@@ -33,6 +33,31 @@ kotlin {
     
     sourceSets {
         val desktopMain by getting
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
+        }
+        val androidUnitTest by getting {
+            dependencies {
+                implementation("junit:junit:4.13.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
+            }
+        }
+
+        // ✅ Instrumented UI tests (needs emulator/device)
+        val androidInstrumentedTest by getting {
+
+            dependencies {
+                implementation("androidx.test.ext:junit:1.1.5")
+                implementation("androidx.test.espresso:espresso-core:3.5.1")
+                implementation("androidx.compose.ui:ui-test-junit4:1.6.0")
+                implementation("androidx.compose.ui:ui-test-manifest:1.6.0")
+                implementation("io.ktor:ktor-client-mock:2.3.12")        // ✅ add this
+                implementation("io.ktor:ktor-client-content-negotiation:2.3.12")  // ✅ add this
+                implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.12")
+            }
+        }
         
         androidMain.dependencies {
             implementation(compose.preview)
@@ -84,6 +109,7 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     packaging {
         resources {

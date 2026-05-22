@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.platform.testTag
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -97,26 +98,29 @@ fun App(client: InsultCensorClient, prefs: DataStore<Preferences>){
                                 }
                             )// In App.kt
                             key(isLoading) {  // ← forces NativeButton to recreate when isLoading changes
-                                NativeButton(onClick = {
-                                    scope.launch {
-                                        try {
-                                            isLoading = true
-                                            errorMessage = null
-                                            client.censorWords(uncensoredText)
-                                                .onSuccess {
-                                                    prefs.edit { dataStore ->
-                                                        val textKey = stringPreferencesKey("counter")
-                                                        dataStore[textKey] = it
+                                Box(modifier = Modifier.testTag("censor_button")) {
+                                    NativeButton(onClick = {
+                                        scope.launch {
+                                            try {
+                                                isLoading = true
+                                                errorMessage = null
+                                                client.censorWords(uncensoredText)
+                                                    .onSuccess {
+                                                        prefs.edit { dataStore ->
+                                                            val textKey =
+                                                                stringPreferencesKey("counter")
+                                                            dataStore[textKey] = it
+                                                        }
                                                     }
-                                                }
-                                                .onError { errorMessage = it }
-                                        } catch (e: Exception) {
-                                            println("CRASH: ${e.message}")
-                                        } finally {
-                                            isLoading = false
+                                                    .onError { errorMessage = it }
+                                            } catch (e: Exception) {
+                                                println("CRASH: ${e.message}")
+                                            } finally {
+                                                isLoading = false
+                                            }
                                         }
-                                    }
-                                }, isLoading)
+                                    }, isLoading)
+                                }
                             }// ← isLoading passed here triggers createButtonView on change
                             savedText?.let {
                                 Text(it)  // always reads from DataStore
