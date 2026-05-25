@@ -71,6 +71,7 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
+            implementation("com.google.accompanist:accompanist-swiperefresh:0.36.0")
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
@@ -133,6 +134,9 @@ android {
         debugImplementation(compose.uiTooling)
         implementation(compose.uiTooling)
     }
+}
+dependencies {
+    implementation(libs.androidx.material3.lint)
 }
 
 compose.desktop {

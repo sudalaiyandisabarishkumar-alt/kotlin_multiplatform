@@ -21,12 +21,8 @@ fun MainViewController(
 ) {                                          // ✅ content lambda opened
     CompositionLocalProvider(LocalNativeViewFactory provides nativeViewFactory) {
         App(
-            client = remember {
-                InsultCensorClient(createHttpClient(Darwin.create()))
-            },
-            prefs = remember {
-                createDataStore()
-            }
+            client    = remember { InsultCensorClient(createHttpClient(Darwin.create())) },
+            prefsRepo = remember { PreferencesRepository(createDataStore()) }
         )
     }
 }                                            // ✅ lambda closed

@@ -20,6 +20,7 @@ koin = "3.6.0-Beta4"
 koinComposeMultiplatform = "1.2.0-Beta4"
 navigationCompose = "2.8.0-alpha02"
 lifecycleViewModel = "2.8.2"
+material3Lint = "1.4.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -50,6 +51,7 @@ ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx
 ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
 datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+androidx-material3-lint = { group = "androidx.compose.material3", name = "material3-lint", version.ref = "material3Lint" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
