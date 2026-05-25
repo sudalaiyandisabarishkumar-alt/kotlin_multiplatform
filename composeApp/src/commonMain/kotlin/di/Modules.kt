@@ -1,17 +1,27 @@
 package di
 
-import dependencies.MyRepository
-import dependencies.MyRepositoryImpl
-import dependencies.MyViewModel
+import io.ktor.client.engine.HttpClientEngine
+import networking.ApiClient
+import networking.util.createHttpClient
 import org.koin.compose.viewmodel.dsl.viewModelOf
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
-import org.koin.dsl.bind
 import org.koin.dsl.module
+import session.PreferencesRepository
+import ui.home.HomeViewModel
+import ui.login.LoginViewModel
 
 expect val platformModule: Module
 
 val sharedModule = module {
-    singleOf(::MyRepositoryImpl).bind<MyRepository>()
-    viewModelOf(::MyViewModel)
+    // Network
+    single { createHttpClient(get<HttpClientEngine>()) }
+    singleOf(::ApiClient)
+
+    // Session
+    singleOf(::PreferencesRepository)
+
+    // ViewModels
+    viewModelOf(::LoginViewModel)
+    viewModelOf(::HomeViewModel)
 }

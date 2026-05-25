@@ -1,7 +1,7 @@
 // iosTest/kotlin/AppIOSTest.kt
-import networking.FakeInsultCensorClient
-import util.onSuccess
 import kotlinx.coroutines.test.runTest
+import networking.FakeApiClient
+import networking.util.onSuccess
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -9,7 +9,7 @@ class AppIOSTest {
 
     @Test
     fun `iOS - censorWords success`() = runTest {
-        val client = FakeInsultCensorClient(shouldFail = false)
+        val client = FakeApiClient(shouldFail = false)
         var result: String? = null
 
         client.censorWords("badword")

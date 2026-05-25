@@ -1,9 +1,11 @@
+package session
+
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import networking.LoginResponse
+import networking.models.LoginResponse
 
 class PreferencesRepository(private val dataStore: DataStore<Preferences>) {
 

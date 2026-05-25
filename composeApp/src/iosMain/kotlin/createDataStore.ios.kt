@@ -1,5 +1,7 @@
 @file:OptIn(ExperimentalForeignApi::class)
 
+package session
+
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import kotlinx.cinterop.ExperimentalForeignApi
@@ -7,21 +9,14 @@ import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDomainMask
 
-fun createDataStore(): DataStore<Preferences> {
-    return createDataStore {
+fun createDataStore(): DataStore<Preferences> =
+    createDataStore {
         val directory = NSFileManager.defaultManager.URLForDirectory(
-            directory = NSDocumentDirectory,
-            inDomain = NSUserDomainMask,
+            directory         = NSDocumentDirectory,
+            inDomain          = NSUserDomainMask,
             appropriateForURL = null,
-            create = false,
-            error = null
+            create            = false,
+            error             = null,
         )
-        println("nsdkd $DATA_STORE_FILE_NAME")
-
-        val fullPath = requireNotNull(directory).path + "/$DATA_STORE_FILE_NAME"
-
-        println("nsdsdkd $fullPath")
-
-        fullPath  // return this as the last line
+        requireNotNull(directory).path + "/$DATA_STORE_FILE_NAME"
     }
-}

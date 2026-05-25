@@ -1,3 +1,5 @@
+package networking.models
+
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -16,7 +18,7 @@ data class Dashboard(
     @SerialName("applied_loans")    val appliedLoans:    Int,
     @SerialName("approved_loans")   val approvedLoans:   Int,
     @SerialName("reapply_loans")    val reapplyLoans:    Int,
-    @SerialName("repayments")       val repayments:      Repayments
+    @SerialName("repayments")       val repayments: Repayments,
 )
 
 @Serializable
@@ -25,5 +27,5 @@ data class Repayments(
     @SerialName("total_due_amount")     val totalDueAmount:     Double,
     @SerialName("no_of_dues")           val noOfDues:           Int,
     @SerialName("no_of_loans")          val noOfLoans:          Int,
-    @SerialName("no_of_overdues")       val noOfOverdues:       Int
+    @SerialName("no_of_overdues")       val noOfOverdues:       Int,
 )

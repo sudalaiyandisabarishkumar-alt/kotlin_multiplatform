@@ -1,3 +1,5 @@
+package session
+
 import androidx.datastore.preferences.core.stringPreferencesKey
 
 object AppPreferences {

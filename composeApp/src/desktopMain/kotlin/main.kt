@@ -1,3 +1,4 @@
+import App
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import di.initKoin
@@ -7,7 +8,7 @@ fun main() {
     application {
         Window(
             onCloseRequest = ::exitApplication,
-            title = "CMP-Koin-DI",
+            title          = "CMP-Koin-DI",
         ) {
             App()
         }

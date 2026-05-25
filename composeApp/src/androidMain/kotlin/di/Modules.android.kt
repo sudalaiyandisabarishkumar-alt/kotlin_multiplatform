@@ -1,20 +1,15 @@
 package di
 
-import dependencies.DbClient
-import dependencies.MyRepository
-import dependencies.MyRepositoryImpl
-import android.os.Build
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import io.ktor.client.engine.HttpClientEngine
+import io.ktor.client.engine.okhttp.OkHttp
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.singleOf
-import org.koin.dsl.bind
 import org.koin.dsl.module
+import session.createDataStore
 
-// ✅ No need for AndroidRepositoryImpl
-// MyRepositoryImpl handles everything
-// just provide actual getDeviceName()
-
-actual val platformModule = module {
-    single { DbClient(androidContext()) }
-    singleOf(::MyRepositoryImpl).bind<MyRepository>() // ✅ use shared impl
+actual val platformModule: Module = module {
+    single<HttpClientEngine> { OkHttp.create() }
+    single<DataStore<Preferences>> { createDataStore(androidContext()) }
 }

@@ -1,28 +1,20 @@
+import App
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.window.ComposeUIViewController
 import com.plcoding.nativeiosincompose.NativeViewFactory
 import di.initKoin
-import networking.InsultCensorClient
-import networking.createHttpClient
-import io.ktor.client.engine.darwin.Darwin
 
 val LocalNativeViewFactory = staticCompositionLocalOf<NativeViewFactory> {
-    error("No view factory provided.")
+    error("No NativeViewFactory provided.")
 }
 
 fun MainViewController(
-    nativeViewFactory: NativeViewFactory
+    nativeViewFactory: NativeViewFactory,
 ) = ComposeUIViewController(
-    configure = {
-        initKoin()
-    }
-) {                                          // ✅ content lambda opened
+    configure = { initKoin() }
+) {
     CompositionLocalProvider(LocalNativeViewFactory provides nativeViewFactory) {
-        App(
-            client    = remember { InsultCensorClient(createHttpClient(Darwin.create())) },
-            prefsRepo = remember { PreferencesRepository(createDataStore()) }
-        )
+        App()
     }
-}                                            // ✅ lambda closed
+}

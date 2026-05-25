@@ -1,4 +1,4 @@
-package networking
+package networking.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

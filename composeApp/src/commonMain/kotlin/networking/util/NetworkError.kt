@@ -1,4 +1,4 @@
-package util
+package networking.util
 
 enum class NetworkError : Error {
     REQUEST_TIMEOUT,
